@@ -18,10 +18,18 @@ endif()
 # find dependencies
 find_package(ament_cmake REQUIRED)
 find_package(rosidl_default_generators REQUIRED)
+find_package(std_msgs REQUIRED)
+
+set(msg_files
+  "msg/VescCtrl.msg"
+  "msg/VescCtrlStamped.msg"
+  "msg/VescState.msg"
+  "msg/VescStateStamped.msg"
+)
 
 rosidl_generate_interfaces(${PROJECT_NAME}
-  "msg/VescCtrl.msg"
-  "msg/VescState.msg"
+  ${msg_files}
+  DEPENDENCIES std_msgs
 )
 
 ament_package()
