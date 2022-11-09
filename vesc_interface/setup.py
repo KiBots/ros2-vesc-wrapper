@@ -1,6 +1,6 @@
 from setuptools import setup
 
-package_name = 'ros_interface'
+package_name = 'vesc_interface'
 
 setup(
     name=package_name,
