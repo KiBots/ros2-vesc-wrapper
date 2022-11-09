@@ -19,7 +19,7 @@ setup(
     license='TODO: License declaration',
     entry_points={
         'console_scripts': [
-            'ros_interface_node = ros_interface.ros_interface_node:main'
+            'vesc_interface_node = vesc_interface.vesc_interface_node:main'
         ],
     },
 )
