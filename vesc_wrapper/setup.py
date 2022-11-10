@@ -1,6 +1,6 @@
 from setuptools import setup
 
-package_name = 'vesc_interface'
+package_name = 'vesc_wrapper'
 
 setup(
     name=package_name,
@@ -19,7 +19,7 @@ setup(
     license='TODO: License declaration',
     entry_points={
         'console_scripts': [
-            'vesc_interface_node = vesc_interface.vesc_interface_node:main'
+            'vesc_wrapper_node = vesc_wrapper.vesc_wrapper_node:main'
         ],
     },
 )

@@ -1,0 +1,9 @@
+from enum import IntEnum
+
+
+class COMM_PACKET_ID(IntEnum):
+    COMM_FW_VERSION = 0,
+    COMM_SET_CURRENT_BRAKE = 7
+    COMM_SET_RPM = 8
+    COMM_SET_HANDBRAKE = 10
+    COMM_SET_SERVO_POS = 12
