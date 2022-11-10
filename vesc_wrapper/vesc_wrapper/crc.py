@@ -18,10 +18,9 @@ crc16_tab: list[int] = [
 
 
 def crc16(payload: bytearray) -> int:
-    # unsigned int i;
-    # unsigned short cksum = 0;
-    # for (i = 0; i < len; i++) {
-    # 	cksum = crc16_tab[(((cksum >> 8) ^ *buf++) & 0xFF)] ^ (cksum << 8);
-    # }
-    # return cksum;
-    return 19
+    check_sum = 0
+    
+    for idx in range(len(payload)):
+        check_sum = (crc16_tab[((check_sum >> 8) ^ payload[idx]) & 0xff] ^ (check_sum << 8)) & 0xFFFF
+
+    return check_sum
