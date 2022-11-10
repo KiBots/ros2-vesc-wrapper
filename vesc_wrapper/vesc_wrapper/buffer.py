@@ -35,7 +35,8 @@ def append_float16(buffer: bytearray, value: float, scale: float, idx: int) -> i
 
 
 def get_float16(buffer: bytearray, scale: float, idx: int) -> tuple[float, int]:
-    return float(get_int16(buffer, idx) / scale)
+    idx, result = get_int16(buffer, idx)
+    return idx, float(result / scale)
 
 
 def append_float32(buffer: bytearray, value: float, scale: float, idx: int) -> int:
@@ -43,19 +44,20 @@ def append_float32(buffer: bytearray, value: float, scale: float, idx: int) -> i
 
 
 def get_float32(buffer: bytearray, scale: float, idx: int) -> tuple[float, int]:
-    return float(get_int32(buffer, idx) / scale)
-
+    idx, result = get_int32(buffer, idx)
+    return idx, float(result / scale)
 
 def append_float64(buffer: bytearray, value: float, scale: float, idx: int) -> int:
     return append_int64(buffer, int(value * scale), idx)
 
 
 def get_float64(buffer: bytearray, scale: float, idx: int) -> tuple[float, int]:
-    return float(get_int64(buffer, idx) / scale)
+    idx, result = get_int64(buffer, idx)
+    return idx, float(result / scale)
 
 
 def append_int(buffer: bytearray, value: int, idx: int, int_size: int) -> int:
-    n_shifts = int_size // 8 - 1
+    n_shifts: int = int_size // 8 - 1
     for i in range(n_shifts + 1):
         n_bits = (n_shifts - i) * 8
         buffer[idx] = (value >> n_bits) & 0xff
@@ -64,12 +66,12 @@ def append_int(buffer: bytearray, value: int, idx: int, int_size: int) -> int:
 
 
 def get_int(buffer: bytearray, idx: int, int_size: int) -> tuple[int, int]:
-    n_shifts = int_size // 8
+    n_shifts: int = int_size // 8
     result: int = 0
     for _ in range(idx, idx + n_shifts):
         result = (result << 8) | buffer[idx]
         idx += 1
-    return result, idx
+    return idx, result
 
 
 def append_buffer(buffer: bytearray, data: bytearray, idx: int) -> int:
