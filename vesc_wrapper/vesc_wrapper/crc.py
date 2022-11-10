@@ -19,8 +19,6 @@ crc16_tab: list[int] = [
 
 def crc16(payload: bytearray) -> int:
     check_sum = 0
-    
     for idx in range(len(payload)):
         check_sum = (crc16_tab[((check_sum >> 8) ^ payload[idx]) & 0xff] ^ (check_sum << 8)) & 0xFFFF
-
     return check_sum
