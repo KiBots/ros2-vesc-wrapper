@@ -1,7 +1,6 @@
 import rclpy
 from rclpy.node import Node
-from rclpy.parameter import Parameter
-from std_msgs.msg import Int64, Float64
+from std_msgs.msg import Int32, Float32
 from vesc_msgs.msg import VescCtrl, VescState
 from vesc_interface import VescInterface
 from threading import Lock
@@ -51,9 +50,9 @@ class VescWrapperNode(Node):
 
         self._vesc_state_pub = self.create_publisher(VescState, '~/vesc_state', 10)
         self._vesc_ctrl_sub = self.create_subscription(VescCtrl, 'vesc_ctrl', self._on_vesc_ctrl_received, 10)
-        self._rpm_sub = self.create_subscription(Int64, 'rpm', self._on_rpm_received, 10)
-        self._handbrake_sub = self.create_subscription(Float64, 'handbrake', self._on_handbrake_received, 10)
-        self._servo_pos_sub = self.create_subscription(Float64, 'servo_pos', self._on_servo_pos_received, 10)
+        self._rpm_sub = self.create_subscription(Int32, 'rpm', self._on_rpm_received, 10)
+        self._handbrake_sub = self.create_subscription(Float32, 'handbrake', self._on_handbrake_received, 10)
+        self._servo_pos_sub = self.create_subscription(Float32, 'servo_pos', self._on_servo_pos_received, 10)
 
     def _do_heartbeat(self) -> None:
         self._lock.acquire()
@@ -69,13 +68,13 @@ class VescWrapperNode(Node):
         self._last_servo_pos = np.clip(msg.servo_pos, self._min_servo_pos, self._max_servo_pos)
         self._lock.release()
 
-    def _on_rpm_received(self, msg: Int64) -> None:
+    def _on_rpm_received(self, msg: Int32) -> None:
         self._last_rpm = np.clip(msg.data, self._min_rpm, self._max_rpm)
 
-    def _on_handbrake_received(self, msg: Float64) -> None:
+    def _on_handbrake_received(self, msg: Float32) -> None:
         self._last_handbrake = np.clip(msg.data, self._min_handbrake, self._max_handbrake)
 
-    def _on_servo_pos_received(self, msg: Float64) -> None:
+    def _on_servo_pos_received(self, msg: Float32) -> None:
         self._last_servo_pos = np.clip(msg.data, self._min_servo_pos, self._max_servo_pos)
 
 
